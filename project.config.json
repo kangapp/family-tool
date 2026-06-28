@@ -1,0 +1,11 @@
+{
+  "appid": "touristappid",
+  "projectname": "family-tool",
+  "setting": {
+    "es6": true,
+    "minified": true,
+    "postcss": true
+  },
+  "compileType": "miniprogram",
+  "miniprogramRoot": "./"
+}
