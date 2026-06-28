@@ -89,5 +89,27 @@
 }
 
 .actions {
+  display: flex;
+  gap: 16rpx;
   margin-top: 22rpx;
+}
+
+.actions button {
+  flex: 1;
+  margin: 0;
+  font-size: 28rpx;
+}
+
+.bill-canvas {
+  position: fixed;
+  left: -9999rpx;
+  width: 1080px;
+  height: 1500px;
+}
+
+.preview {
+  display: block;
+  width: 100%;
+  margin-top: 24rpx;
+  border: 1rpx solid #d8d2c8;
 }

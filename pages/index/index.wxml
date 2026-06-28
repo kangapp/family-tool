@@ -55,5 +55,10 @@
 
   <view class="actions">
     <button bindtap="resetForm">重置</button>
+    <button type="primary" bindtap="generateImage">生成图片</button>
+    <button wx:if="{{imagePath}}" bindtap="saveImage">保存图片</button>
   </view>
+
+  <canvas canvas-id="billCanvas" class="bill-canvas"></canvas>
+  <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="widthFix" />
 </view>
