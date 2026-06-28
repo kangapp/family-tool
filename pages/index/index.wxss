@@ -55,24 +55,42 @@
 .tr {
   display: grid;
   grid-template-columns: 160rpx repeat(8, 160rpx);
-  min-height: 76rpx;
+  height: 76rpx;
 }
 
-.tr > text,
-.tr > input,
-.tr > switch {
+.cell {
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 0;
   padding: 16rpx 10rpx;
   border-right: 1rpx solid #b9b0a3;
   border-bottom: 1rpx solid #b9b0a3;
   text-align: center;
   font-size: 26rpx;
+  line-height: 1.2;
+  overflow: hidden;
 }
 
 .th {
   font-weight: 600;
   background: #efe8dc;
+}
+
+.cell-input {
+  width: 100%;
+  height: 44rpx;
+  min-height: 44rpx;
+  padding: 0;
+  background: transparent;
+  text-align: center;
+  font-size: 26rpx;
+  line-height: 44rpx;
+}
+
+.cell-switch {
+  transform: scale(0.68);
 }
 
 .errors {

@@ -18,27 +18,35 @@
   <scroll-view scroll-x class="table-scroll">
     <view class="table">
       <view class="tr th">
-        <text>楼层住户</text>
-        <text>上月底数</text>
-        <text>本月读数</text>
-        <text>用电量</text>
-        <text>电费</text>
-        <text>平摊</text>
-        <text>分摊费</text>
-        <text>管理费</text>
-        <text>合计</text>
+        <view class="cell">楼层住户</view>
+        <view class="cell">上月底数</view>
+        <view class="cell">本月读数</view>
+        <view class="cell">用电量</view>
+        <view class="cell">电费</view>
+        <view class="cell">平摊</view>
+        <view class="cell">分摊费</view>
+        <view class="cell">管理费</view>
+        <view class="cell">合计</view>
       </view>
 
       <view class="tr" wx:for="{{result.rows}}" wx:key="name">
-        <text>{{item.name}}</text>
-        <input type="number" value="{{form.rows[index].previous}}" data-index="{{index}}" data-field="previous" bindinput="updateRow" />
-        <input type="number" value="{{form.rows[index].current}}" data-index="{{index}}" data-field="current" bindinput="updateRow" />
-        <text>{{item.usage}}</text>
-        <text>{{item.electricityFee}}</text>
-        <switch checked="{{form.rows[index].share}}" data-index="{{index}}" bindchange="updateShare" />
-        <text>{{item.shareFee}}</text>
-        <input type="digit" value="{{form.rows[index].managementFee}}" placeholder="{{item.managementFee}}" data-index="{{index}}" data-field="managementFee" bindinput="updateRow" />
-        <text>{{item.total}}</text>
+        <view class="cell">{{item.name}}</view>
+        <view class="cell">
+          <input class="cell-input" type="number" value="{{form.rows[index].previous}}" data-index="{{index}}" data-field="previous" bindinput="updateRow" />
+        </view>
+        <view class="cell">
+          <input class="cell-input" type="number" value="{{form.rows[index].current}}" data-index="{{index}}" data-field="current" bindinput="updateRow" />
+        </view>
+        <view class="cell">{{item.usage}}</view>
+        <view class="cell">{{item.electricityFee}}</view>
+        <view class="cell">
+          <switch class="cell-switch" checked="{{form.rows[index].share}}" data-index="{{index}}" bindchange="updateShare" />
+        </view>
+        <view class="cell">{{item.shareFee}}</view>
+        <view class="cell">
+          <input class="cell-input" type="digit" value="{{form.rows[index].managementFee}}" placeholder="{{item.managementFee}}" data-index="{{index}}" data-field="managementFee" bindinput="updateRow" />
+        </view>
+        <view class="cell">{{item.total}}</view>
       </view>
     </view>
   </scroll-view>
