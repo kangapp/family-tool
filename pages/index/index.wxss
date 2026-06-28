@@ -120,9 +120,12 @@
 
 .bill-canvas {
   position: fixed;
-  left: -9999rpx;
-  width: 1080px;
-  height: 1500px;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 500px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .preview {

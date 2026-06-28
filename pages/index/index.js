@@ -59,72 +59,88 @@ Page({
       return;
     }
 
-    const ctx = wx.createCanvasContext("billCanvas", this);
     const width = 1080;
+    const height = 1500;
     const left = 50;
     const top = 120;
     const rowHeight = 72;
     const columns = [140, 110, 110, 110, 105, 105, 105, 105, 85];
     const headers = ["楼层住户", "上月底数", "本月读数", "用电量", "电费", "分摊费", "管理费", "合计", "平摊"];
 
-    ctx.setFillStyle("#fffdf8");
-    ctx.fillRect(0, 0, width, 1500);
-    ctx.setFillStyle("#1f2933");
-    ctx.setFontSize(44);
-    ctx.setTextAlign("center");
-    ctx.fillText(`${this.data.form.month}电费明细表`, width / 2, 70);
+    wx.createSelectorQuery()
+      .in(this)
+      .select("#billCanvas")
+      .fields({ node: true, size: true })
+      .exec((res) => {
+        const canvas = res[0] && res[0].node;
+        if (!canvas) {
+          wx.showToast({ title: "生成失败", icon: "none" });
+          return;
+        }
 
-    let y = top;
-    this.drawTableRow(ctx, left, y, columns, headers, rowHeight, true);
-    y += rowHeight;
+        const dpr = wx.getSystemInfoSync().pixelRatio || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
 
-    this.data.result.rows.forEach((row) => {
-      this.drawTableRow(ctx, left, y, columns, [
-        row.name,
-        row.previous,
-        row.current,
-        row.usage,
-        row.electricityFee,
-        row.shareFee,
-        row.managementFee,
-        row.total,
-        row.share ? "是" : "否"
-      ], rowHeight, false);
-      y += rowHeight;
-    });
+        const ctx = canvas.getContext("2d");
+        ctx.scale(dpr, dpr);
+        ctx.fillStyle = "#fffdf8";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "#1f2933";
+        ctx.font = "44px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(`${this.data.form.month}电费明细表`, width / 2, 70);
 
-    ctx.setTextAlign("left");
-    ctx.setFontSize(30);
-    ctx.fillText(`总表电费：${this.data.form.totalBill || 0} 元`, left, y + 70);
-    ctx.fillText(`电费每度：${this.data.form.unitPrice || 0} 元`, left, y + 118);
-    ctx.fillText(`合计：${this.data.result.summary.grandTotal} 元`, left, y + 166);
+        let y = top;
+        this.drawTableRow(ctx, left, y, columns, headers, rowHeight, true);
+        y += rowHeight;
 
-    ctx.draw(false, () => {
+        this.data.result.rows.forEach((row) => {
+          this.drawTableRow(ctx, left, y, columns, [
+            row.name,
+            row.previous,
+            row.current,
+            row.usage,
+            row.electricityFee,
+            row.shareFee,
+            row.managementFee,
+            row.total,
+            row.share ? "是" : "否"
+          ], rowHeight, false);
+          y += rowHeight;
+        });
+
+        ctx.textAlign = "left";
+        ctx.font = "30px sans-serif";
+        ctx.fillText(`总表电费：${this.data.form.totalBill || 0} 元`, left, y + 70);
+        ctx.fillText(`电费每度：${this.data.form.unitPrice || 0} 元`, left, y + 118);
+        ctx.fillText(`合计：${this.data.result.summary.grandTotal} 元`, left, y + 166);
+
       wx.canvasToTempFilePath({
-        canvasId: "billCanvas",
+        canvas,
         width,
-        height: 1500,
+        height,
         destWidth: width,
-        destHeight: 1500,
+        destHeight: height,
         success: (res) => this.setData({ imagePath: res.tempFilePath }),
         fail: () => wx.showToast({ title: "生成失败", icon: "none" })
       }, this);
-    });
+      });
   },
 
   drawTableRow(ctx, left, top, columns, values, height, isHeader) {
     let x = left;
-    ctx.setStrokeStyle("#4b5563");
-    ctx.setFillStyle(isHeader ? "#efe8dc" : "#fffdf8");
-    ctx.setFontSize(24);
-    ctx.setTextAlign("center");
+    ctx.strokeStyle = "#4b5563";
+    ctx.fillStyle = isHeader ? "#efe8dc" : "#fffdf8";
+    ctx.font = "24px sans-serif";
+    ctx.textAlign = "center";
 
     columns.forEach((width, index) => {
       ctx.fillRect(x, top, width, height);
       ctx.strokeRect(x, top, width, height);
-      ctx.setFillStyle("#1f2933");
+      ctx.fillStyle = "#1f2933";
       ctx.fillText(String(values[index] == null ? "" : values[index]), x + width / 2, top + 45);
-      ctx.setFillStyle(isHeader ? "#efe8dc" : "#fffdf8");
+      ctx.fillStyle = isHeader ? "#efe8dc" : "#fffdf8";
       x += width;
     });
   },

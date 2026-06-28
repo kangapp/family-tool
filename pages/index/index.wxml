@@ -67,6 +67,6 @@
     <button wx:if="{{imagePath}}" bindtap="saveImage">保存图片</button>
   </view>
 
-  <canvas canvas-id="billCanvas" class="bill-canvas"></canvas>
+  <canvas type="2d" id="billCanvas" class="bill-canvas"></canvas>
   <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="widthFix" />
 </view>
