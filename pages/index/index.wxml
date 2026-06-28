@@ -1,3 +1,59 @@
 <view class="page">
-  <view class="title">电费明细</view>
+  <view class="header">
+    <input class="month" value="{{form.month}}" data-field="month" bindinput="updateBase" />
+    <view class="subtitle">电费明细表</view>
+  </view>
+
+  <view class="base-grid">
+    <label class="field">
+      <text>总表电费</text>
+      <input type="digit" value="{{form.totalBill}}" data-field="totalBill" bindinput="updateBase" />
+    </label>
+    <label class="field">
+      <text>电费每度</text>
+      <input type="digit" value="{{form.unitPrice}}" data-field="unitPrice" bindinput="updateBase" />
+    </label>
+  </view>
+
+  <scroll-view scroll-x class="table-scroll">
+    <view class="table">
+      <view class="tr th">
+        <text>楼层住户</text>
+        <text>上月底数</text>
+        <text>本月读数</text>
+        <text>用电量</text>
+        <text>电费</text>
+        <text>平摊</text>
+        <text>分摊费</text>
+        <text>管理费</text>
+        <text>合计</text>
+      </view>
+
+      <view class="tr" wx:for="{{result.rows}}" wx:key="name">
+        <text>{{item.name}}</text>
+        <input type="number" value="{{form.rows[index].previous}}" data-index="{{index}}" data-field="previous" bindinput="updateRow" />
+        <input type="number" value="{{form.rows[index].current}}" data-index="{{index}}" data-field="current" bindinput="updateRow" />
+        <text>{{item.usage}}</text>
+        <text>{{item.electricityFee}}</text>
+        <switch checked="{{form.rows[index].share}}" data-index="{{index}}" bindchange="updateShare" />
+        <text>{{item.shareFee}}</text>
+        <input type="digit" value="{{form.rows[index].managementFee}}" placeholder="{{item.managementFee}}" data-index="{{index}}" data-field="managementFee" bindinput="updateRow" />
+        <text>{{item.total}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="errors" wx:if="{{result.errors.length}}">
+    <view wx:for="{{result.errors}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="summary">
+    <text>参与平摊：{{result.summary.shareCount}} 户</text>
+    <text>每户分摊：{{result.summary.shareFee}} 元</text>
+    <text>合计：{{result.summary.grandTotal}} 元</text>
+  </view>
+
+  <view class="actions">
+    <button bindtap="resetForm">重置</button>
+  </view>
 </view>
