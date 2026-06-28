@@ -119,12 +119,10 @@
 }
 
 .bill-canvas {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 360px;
-  height: 500px;
-  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin-top: -1px;
+  overflow: hidden;
   pointer-events: none;
 }
 

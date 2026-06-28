@@ -78,7 +78,8 @@ Page({
           return;
         }
 
-        const dpr = wx.getSystemInfoSync().pixelRatio || 1;
+        const windowInfo = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync();
+        const dpr = windowInfo.pixelRatio || 1;
         canvas.width = width * dpr;
         canvas.height = height * dpr;
 
