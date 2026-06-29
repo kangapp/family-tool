@@ -7,7 +7,8 @@ Page({
   data: {
     form: createDefaultState(),
     result: calculateElectricity(createDefaultState()),
-    imagePath: ""
+    imagePath: "",
+    isGenerating: false
   },
 
   onLoad() {
@@ -54,10 +55,14 @@ Page({
   },
 
   generateImage() {
+    if (this.data.isGenerating) return;
+
     if (this.data.result.errors.length > 0) {
       wx.showToast({ title: "请先修正错误", icon: "none" });
       return;
     }
+
+    this.setData({ imagePath: "", isGenerating: true });
 
     const width = 1080;
     const height = 1500;
@@ -74,6 +79,7 @@ Page({
       .exec((res) => {
         const canvas = res[0] && res[0].node;
         if (!canvas) {
+          this.setData({ isGenerating: false });
           wx.showToast({ title: "生成失败", icon: "none" });
           return;
         }
@@ -123,8 +129,14 @@ Page({
         height,
         destWidth: width,
         destHeight: height,
-        success: (res) => this.setData({ imagePath: res.tempFilePath }),
-        fail: () => wx.showToast({ title: "生成失败", icon: "none" })
+        success: (res) => {
+          this.setData({ imagePath: res.tempFilePath, isGenerating: false });
+          wx.showToast({ title: "生成完成", icon: "success" });
+        },
+        fail: () => {
+          this.setData({ isGenerating: false });
+          wx.showToast({ title: "生成失败", icon: "none" });
+        }
       }, this);
       });
   },
