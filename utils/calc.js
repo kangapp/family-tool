@@ -10,25 +10,42 @@ function round2(value) {
 
 function calculateElectricity(state) {
   const errors = [];
+  const fieldErrors = {};
   const unitPrice = toNumber(state.unitPrice);
   const totalBill = toNumber(state.totalBill);
 
-  if (unitPrice < 0) errors.push("电费每度不能小于 0");
-  if (totalBill < 0) errors.push("总表电费不能小于 0");
+  if (unitPrice < 0) {
+    fieldErrors.unitPrice = true;
+    errors.push("电费每度不能小于 0");
+  }
+  if (totalBill < 0) {
+    fieldErrors.totalBill = true;
+    errors.push("总表电费不能小于 0");
+  }
 
   const baseRows = state.rows.map((row) => {
     const previous = toNumber(row.previous);
     const current = toNumber(row.current);
     const usage = current - previous;
+    const rowErrors = {};
 
-    if (usage < 0) errors.push(`${row.name} 本月读数不能小于上月底数`);
+    if (usage < 0) {
+      rowErrors.current = true;
+      errors.push(`${row.name} 本月读数不能小于上月底数`);
+    }
 
     const electricityFee = round2(Math.max(usage, 0) * Math.max(unitPrice, 0));
     const defaultManagementFee = usage > 0 ? row.managementFeeActive : 0;
     const managementFee = row.managementFee === "" ? defaultManagementFee : toNumber(row.managementFee);
 
+    if (managementFee < 0) {
+      rowErrors.managementFee = true;
+      errors.push(`${row.name} 管理费不能小于 0`);
+    }
+
     return {
       ...row,
+      errors: rowErrors,
       previous,
       current,
       usage: Math.max(usage, 0),
@@ -64,6 +81,7 @@ function calculateElectricity(state) {
       shareFee,
       grandTotal: round2(rows.reduce((sum, row) => sum + row.total, 0))
     },
+    fieldErrors,
     errors
   };
 }

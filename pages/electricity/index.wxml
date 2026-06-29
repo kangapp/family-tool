@@ -9,11 +9,11 @@
   <view class="guide">浅绿色格子可修改，费用会自动计算。</view>
 
   <view class="base-grid">
-    <label class="field">
+    <label class="field {{result.fieldErrors.totalBill ? 'invalid' : ''}}">
       <text>总表电费</text>
       <input class="editable-input" type="digit" value="{{form.totalBill}}" data-field="totalBill" bindinput="updateBase" />
     </label>
-    <label class="field">
+    <label class="field {{result.fieldErrors.unitPrice ? 'invalid' : ''}}">
       <text>电费每度</text>
       <input class="editable-input" type="digit" value="{{form.unitPrice}}" data-field="unitPrice" bindinput="updateBase" />
     </label>
@@ -38,7 +38,7 @@
         <view class="cell editable">
           <input class="cell-input" type="number" value="{{form.rows[index].previous}}" data-index="{{index}}" data-field="previous" bindinput="updateRow" />
         </view>
-        <view class="cell editable">
+        <view class="cell editable {{item.errors.current ? 'invalid' : ''}}">
           <input class="cell-input" type="number" value="{{form.rows[index].current}}" data-index="{{index}}" data-field="current" bindinput="updateRow" />
         </view>
         <view class="cell">{{item.usage}}</view>
@@ -47,7 +47,7 @@
           <switch class="cell-switch" checked="{{form.rows[index].share}}" data-index="{{index}}" bindchange="updateShare" />
         </view>
         <view class="cell">{{item.shareFee}}</view>
-        <view class="cell editable">
+        <view class="cell editable {{item.errors.managementFee ? 'invalid' : ''}}">
           <input class="cell-input" type="digit" value="{{form.rows[index].managementFee}}" placeholder="{{item.managementFee}}" data-index="{{index}}" data-field="managementFee" bindinput="updateRow" />
         </view>
         <view class="cell">{{item.total}}</view>

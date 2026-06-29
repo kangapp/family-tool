@@ -24,6 +24,15 @@ assert.equal(result.errors.length, 0);
 const invalid = createDefaultState();
 invalid.rows[0].previous = "10";
 invalid.rows[0].current = "9";
-assert.equal(calculateElectricity(invalid).errors[0], "一楼101 本月读数不能小于上月底数");
+const invalidResult = calculateElectricity(invalid);
+assert.equal(invalidResult.errors[0], "一楼101 本月读数不能小于上月底数");
+assert.equal(invalidResult.rows[0].errors.current, true);
+
+const invalidBase = createDefaultState();
+invalidBase.totalBill = "-1";
+invalidBase.unitPrice = "-1";
+const invalidBaseResult = calculateElectricity(invalidBase);
+assert.equal(invalidBaseResult.fieldErrors.totalBill, true);
+assert.equal(invalidBaseResult.fieldErrors.unitPrice, true);
 
 console.log("calc self-check passed");
