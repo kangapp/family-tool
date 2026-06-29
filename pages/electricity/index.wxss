@@ -1,5 +1,6 @@
 .page {
   padding: 24rpx;
+  background: #faf4e8;
 }
 
 .header {
@@ -9,7 +10,7 @@
 
 .month {
   display: inline-block;
-  width: 260rpx;
+  width: 300rpx;
   font-size: 36rpx;
   font-weight: 600;
   text-align: center;
@@ -17,8 +18,19 @@
 
 .subtitle {
   margin-top: 6rpx;
+  color: #26362b;
   font-size: 34rpx;
   font-weight: 600;
+}
+
+.guide {
+  margin-bottom: 18rpx;
+  padding: 16rpx 20rpx;
+  color: #4f6f43;
+  background: #eef6e8;
+  border: 1rpx solid #c8d9bc;
+  border-radius: 8rpx;
+  font-size: 26rpx;
 }
 
 .base-grid {
@@ -31,21 +43,21 @@
 .field {
   display: block;
   padding: 16rpx;
-  background: #fff;
-  border: 1rpx solid #d8d2c8;
+  background: #fffaf0;
+  border: 1rpx solid #d7c9b1;
   border-radius: 8rpx;
 }
 
 .field text {
   display: block;
   margin-bottom: 8rpx;
-  color: #65717c;
+  color: #70806d;
   font-size: 24rpx;
 }
 
 .table-scroll {
-  background: #fffdf8;
-  border: 1rpx solid #b9b0a3;
+  background: #fffaf0;
+  border: 1rpx solid #c5b79d;
 }
 
 .table {
@@ -65,8 +77,8 @@
   justify-content: center;
   min-width: 0;
   padding: 16rpx 10rpx;
-  border-right: 1rpx solid #b9b0a3;
-  border-bottom: 1rpx solid #b9b0a3;
+  border-right: 1rpx solid #c5b79d;
+  border-bottom: 1rpx solid #c5b79d;
   text-align: center;
   font-size: 26rpx;
   line-height: 1.2;
@@ -75,7 +87,18 @@
 
 .th {
   font-weight: 600;
-  background: #efe8dc;
+  background: #efe4d0;
+}
+
+.editable {
+  background: #eef6e8;
+  box-shadow: inset 0 0 0 2rpx #b9d1ad;
+}
+
+.editable-input {
+  color: #26362b;
+  background: #eef6e8;
+  border-radius: 6rpx;
 }
 
 .cell-input {
@@ -95,7 +118,7 @@
 
 .errors {
   margin-top: 18rpx;
-  color: #b42318;
+  color: #a23b2a;
   font-size: 24rpx;
 }
 
@@ -103,6 +126,7 @@
   display: grid;
   gap: 8rpx;
   margin-top: 18rpx;
+  color: #26362b;
   font-size: 28rpx;
 }
 
@@ -118,6 +142,10 @@
   font-size: 28rpx;
 }
 
+.actions button[type="primary"] {
+  background: #6f965f;
+}
+
 .bill-canvas {
   width: 1px;
   height: 1px;
@@ -130,5 +158,5 @@
   display: block;
   width: 100%;
   margin-top: 24rpx;
-  border: 1rpx solid #d8d2c8;
+  border: 1rpx solid #d7c9b1;
 }

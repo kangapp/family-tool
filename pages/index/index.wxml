@@ -5,7 +5,10 @@
   </view>
 
   <view class="tool-card" bindtap="openElectricity">
-    <view class="tool-title">电费分摊</view>
-    <view class="tool-desc">录入读数，生成电费明细图</view>
+    <view>
+      <view class="tool-title">电费分摊</view>
+      <view class="tool-desc">录入读数，生成电费明细图</view>
+    </view>
+    <view class="tool-action">进入</view>
   </view>
 </view>

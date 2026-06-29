@@ -1,7 +1,7 @@
 .page {
   min-height: 100vh;
   padding: 40rpx 28rpx;
-  background: #f6f3ed;
+  background: #faf4e8;
   box-sizing: border-box;
 }
 
@@ -10,32 +10,44 @@
 }
 
 .title {
-  color: #1f2933;
+  color: #26362b;
   font-size: 44rpx;
   font-weight: 700;
 }
 
 .subtitle {
   margin-top: 8rpx;
-  color: #65717c;
+  color: #70806d;
   font-size: 26rpx;
 }
 
 .tool-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 28rpx;
-  background: #fffdf8;
-  border: 1rpx solid #d8d2c8;
+  background: #fffaf0;
+  border: 1rpx solid #d7c9b1;
+  border-left: 10rpx solid #7fa36a;
   border-radius: 8rpx;
 }
 
 .tool-title {
-  color: #1f2933;
+  color: #26362b;
   font-size: 34rpx;
   font-weight: 600;
 }
 
 .tool-desc {
   margin-top: 10rpx;
-  color: #65717c;
+  color: #70806d;
   font-size: 26rpx;
+}
+
+.tool-action {
+  padding: 10rpx 18rpx;
+  color: #fffaf0;
+  background: #6f965f;
+  border-radius: 999rpx;
+  font-size: 24rpx;
 }
