@@ -2,11 +2,16 @@ const { createDefaultState } = require("../../utils/default-data");
 const { calculateElectricity } = require("../../utils/calc");
 
 const STORAGE_KEY = "family-electricity-draft";
+const TEMPLATE_KEY = "family-electricity-template";
+
+function getTemplateState() {
+  return wx.getStorageSync(TEMPLATE_KEY) || createDefaultState();
+}
 
 Page({
   data: {
-    form: createDefaultState(),
-    result: calculateElectricity(createDefaultState()),
+    form: getTemplateState(),
+    result: calculateElectricity(getTemplateState()),
     imagePath: "",
     isGenerating: false
   },
@@ -51,7 +56,7 @@ Page({
 
   resetForm() {
     wx.removeStorageSync(STORAGE_KEY);
-    const form = createDefaultState();
+    const form = getTemplateState();
     const result = calculateElectricity(form);
     this.setData({ form, result, imagePath: "" });
     wx.showToast({ title: "已重置", icon: "success" });
@@ -185,7 +190,11 @@ Page({
     if (!this.data.imagePath) return;
     wx.saveImageToPhotosAlbum({
       filePath: this.data.imagePath,
-      success: () => wx.showToast({ title: "已保存" }),
+      success: () => {
+        wx.setStorageSync(TEMPLATE_KEY, this.data.form);
+        wx.setStorageSync(STORAGE_KEY, this.data.form);
+        wx.showToast({ title: "已设为模板", icon: "success" });
+      },
       fail: () => wx.showToast({ title: "保存失败", icon: "none" })
     });
   }
