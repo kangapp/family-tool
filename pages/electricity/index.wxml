@@ -67,6 +67,7 @@
 
   <view class="actions">
     <button bindtap="resetForm">重置</button>
+    <button bindtap="openEditMode">横屏编辑</button>
     <button type="primary" loading="{{isGenerating}}" disabled="{{isGenerating}}" bindtap="generateImage">{{isGenerating ? "生成中" : "生成图片"}}</button>
     <button wx:if="{{imagePath}}" bindtap="saveImage">保存图片</button>
   </view>

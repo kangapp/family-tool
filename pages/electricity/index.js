@@ -36,6 +36,14 @@ Page({
     }
   },
 
+  onShow() {
+    const saved = wx.getStorageSync(STORAGE_KEY);
+    if (saved) {
+      const result = calculateElectricity(saved);
+      this.setData({ form: saved, result, monthValue: parsePickerMonth(saved.month) });
+    }
+  },
+
   setForm(form) {
     const result = calculateElectricity(form);
     this.setData({ form, result, monthValue: parsePickerMonth(form.month) });
@@ -77,6 +85,10 @@ Page({
     const result = calculateElectricity(form);
     this.setData({ form, result, imagePath: "" });
     wx.showToast({ title: "已重置", icon: "success" });
+  },
+
+  openEditMode() {
+    wx.navigateTo({ url: "/pages/electricity-edit/index" });
   },
 
   generateImage() {

@@ -1,5 +1,5 @@
 {
-  "pages": ["pages/index/index", "pages/electricity/index"],
+  "pages": ["pages/index/index", "pages/electricity/index", "pages/electricity-edit/index"],
   "window": {
     "navigationBarTitleText": "家庭工具",
     "navigationBarBackgroundColor": "#ffffff",
