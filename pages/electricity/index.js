@@ -90,10 +90,12 @@ Page({
     this.setData({ imagePath: "", isGenerating: true });
 
     const width = 1080;
-    const height = 1500;
     const left = 50;
     const top = 120;
     const rowHeight = 72;
+    const summaryBottom = 166;
+    const bottomPadding = 70;
+    const height = top + rowHeight * (this.data.result.rows.length + 1) + summaryBottom + bottomPadding;
     const columns = [140, 110, 110, 110, 105, 105, 105, 105, 85];
     const headers = ["楼层住户", "上月底数", "本月读数", "用电量", "电费", "分摊费", "管理费", "合计", "平摊"];
 
@@ -210,7 +212,7 @@ Page({
       success: () => {
         wx.setStorageSync(TEMPLATE_KEY, this.data.form);
         wx.setStorageSync(STORAGE_KEY, this.data.form);
-        wx.showToast({ title: "已设为模板", icon: "success" });
+        wx.showToast({ title: "保存成功", icon: "success" });
       },
       fail: () => wx.showToast({ title: "保存失败", icon: "none" })
     });
