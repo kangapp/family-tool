@@ -1,0 +1,72 @@
+<view class="page">
+  <view class="header">
+    <input class="month" value="{{form.month}}" data-field="month" bindinput="updateBase" />
+    <view class="subtitle">电费明细表</view>
+  </view>
+
+  <view class="base-grid">
+    <label class="field">
+      <text>总表电费</text>
+      <input type="digit" value="{{form.totalBill}}" data-field="totalBill" bindinput="updateBase" />
+    </label>
+    <label class="field">
+      <text>电费每度</text>
+      <input type="digit" value="{{form.unitPrice}}" data-field="unitPrice" bindinput="updateBase" />
+    </label>
+  </view>
+
+  <scroll-view scroll-x class="table-scroll">
+    <view class="table">
+      <view class="tr th">
+        <view class="cell">楼层住户</view>
+        <view class="cell">上月底数</view>
+        <view class="cell">本月读数</view>
+        <view class="cell">用电量</view>
+        <view class="cell">电费</view>
+        <view class="cell">平摊</view>
+        <view class="cell">分摊费</view>
+        <view class="cell">管理费</view>
+        <view class="cell">合计</view>
+      </view>
+
+      <view class="tr" wx:for="{{result.rows}}" wx:key="name">
+        <view class="cell">{{item.name}}</view>
+        <view class="cell">
+          <input class="cell-input" type="number" value="{{form.rows[index].previous}}" data-index="{{index}}" data-field="previous" bindinput="updateRow" />
+        </view>
+        <view class="cell">
+          <input class="cell-input" type="number" value="{{form.rows[index].current}}" data-index="{{index}}" data-field="current" bindinput="updateRow" />
+        </view>
+        <view class="cell">{{item.usage}}</view>
+        <view class="cell">{{item.electricityFee}}</view>
+        <view class="cell">
+          <switch class="cell-switch" checked="{{form.rows[index].share}}" data-index="{{index}}" bindchange="updateShare" />
+        </view>
+        <view class="cell">{{item.shareFee}}</view>
+        <view class="cell">
+          <input class="cell-input" type="digit" value="{{form.rows[index].managementFee}}" placeholder="{{item.managementFee}}" data-index="{{index}}" data-field="managementFee" bindinput="updateRow" />
+        </view>
+        <view class="cell">{{item.total}}</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <view class="errors" wx:if="{{result.errors.length}}">
+    <view wx:for="{{result.errors}}" wx:key="*this">{{item}}</view>
+  </view>
+
+  <view class="summary">
+    <text>参与平摊：{{result.summary.shareCount}} 户</text>
+    <text>每户分摊：{{result.summary.shareFee}} 元</text>
+    <text>合计：{{result.summary.grandTotal}} 元</text>
+  </view>
+
+  <view class="actions">
+    <button bindtap="resetForm">重置</button>
+    <button type="primary" bindtap="generateImage">生成图片</button>
+    <button wx:if="{{imagePath}}" bindtap="saveImage">保存图片</button>
+  </view>
+
+  <canvas type="2d" id="billCanvas" class="bill-canvas"></canvas>
+  <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="widthFix" />
+</view>

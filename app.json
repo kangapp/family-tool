@@ -1,7 +1,7 @@
 {
-  "pages": ["pages/index/index"],
+  "pages": ["pages/index/index", "pages/electricity/index"],
   "window": {
-    "navigationBarTitleText": "家庭电费",
+    "navigationBarTitleText": "家庭工具",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTextStyle": "black"
   },
