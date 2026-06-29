@@ -147,7 +147,20 @@ Page({
 
   scrollToPreview() {
     wx.nextTick(() => {
-      wx.pageScrollTo({ selector: "#preview", duration: 300 });
+      wx.createSelectorQuery()
+        .selectViewport()
+        .scrollOffset()
+        .select("#preview")
+        .boundingClientRect()
+        .exec((res) => {
+          const viewport = res[0];
+          const preview = res[1];
+          if (!viewport || !preview) return;
+
+          const windowInfo = wx.getWindowInfo ? wx.getWindowInfo() : wx.getSystemInfoSync();
+          const scrollTop = viewport.scrollTop + preview.top - (windowInfo.windowHeight - preview.height) / 2;
+          wx.pageScrollTo({ scrollTop: Math.max(scrollTop, 0), duration: 300 });
+        });
     });
   },
 
