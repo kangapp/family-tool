@@ -70,5 +70,5 @@
   </view>
 
   <canvas type="2d" id="billCanvas" class="bill-canvas"></canvas>
-  <image wx:if="{{imagePath}}" class="preview" src="{{imagePath}}" mode="widthFix" />
+  <image wx:if="{{imagePath}}" id="preview" class="preview" src="{{imagePath}}" mode="widthFix" />
 </view>

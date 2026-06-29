@@ -51,7 +51,10 @@ Page({
 
   resetForm() {
     wx.removeStorageSync(STORAGE_KEY);
-    this.setForm(createDefaultState());
+    const form = createDefaultState();
+    const result = calculateElectricity(form);
+    this.setData({ form, result, imagePath: "" });
+    wx.showToast({ title: "已重置", icon: "success" });
   },
 
   generateImage() {
@@ -132,6 +135,7 @@ Page({
         success: (res) => {
           this.setData({ imagePath: res.tempFilePath, isGenerating: false });
           wx.showToast({ title: "生成完成", icon: "success" });
+          this.scrollToPreview();
         },
         fail: () => {
           this.setData({ isGenerating: false });
@@ -139,6 +143,12 @@ Page({
         }
       }, this);
       });
+  },
+
+  scrollToPreview() {
+    wx.nextTick(() => {
+      wx.pageScrollTo({ selector: "#preview", duration: 300 });
+    });
   },
 
   drawTableRow(ctx, left, top, columns, values, height, isHeader) {
