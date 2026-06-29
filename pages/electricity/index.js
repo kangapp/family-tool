@@ -8,10 +8,23 @@ function getTemplateState() {
   return wx.getStorageSync(TEMPLATE_KEY) || createDefaultState();
 }
 
+function formatMonth(value) {
+  const matched = String(value || "").match(/^(\d{4})-(\d{2})$/);
+  return matched ? `${matched[1]}年${matched[2]}月` : value;
+}
+
+function parsePickerMonth(value) {
+  const matched = String(value || "").match(/^(\d{4})年(\d{2})月$/);
+  return matched ? `${matched[1]}-${matched[2]}` : "2026-05";
+}
+
+const initialForm = getTemplateState();
+
 Page({
   data: {
-    form: getTemplateState(),
-    result: calculateElectricity(getTemplateState()),
+    form: initialForm,
+    result: calculateElectricity(initialForm),
+    monthValue: parsePickerMonth(initialForm.month),
     imagePath: "",
     isGenerating: false
   },
@@ -25,8 +38,12 @@ Page({
 
   setForm(form) {
     const result = calculateElectricity(form);
-    this.setData({ form, result });
+    this.setData({ form, result, monthValue: parsePickerMonth(form.month) });
     wx.setStorageSync(STORAGE_KEY, form);
+  },
+
+  updateMonth(event) {
+    this.setForm({ ...this.data.form, month: formatMonth(event.detail.value) });
   },
 
   updateBase(event) {
